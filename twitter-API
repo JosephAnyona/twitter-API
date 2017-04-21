@@ -1,0 +1,34 @@
+from tweepy.streaming import StreamListener
+from tweepy import OAuthHandler
+from tweepy import Stream
+import time
+
+acces_token = "" #insert your access_token here - given by twitter after creating app
+access_token_secret = "" #insert your access token secret here  - given by twitter after creating app
+consumer_key = "" #insert yourconsumer key here  - given by twitter after creating app
+consumer_secret = "" #insert your consumer secret here  - given by twitter after creating app
+
+#Listener
+class StdOutListener(StreamListener):
+    def on_data(self, data):
+        try:
+            print(data)
+            savefile=open("twitter.txt","a")
+            savefile.write(data)
+            savefile.write('\n')
+            savefile.close()
+            return True
+            
+        except BaseException as e:
+            print('Failed on data',str(e))
+            time.sleep(5)
+        
+    def on_error(self, status):
+        print(status)
+        
+if __name__ == '__main__':
+    l=StdOutListener()
+    auth=OAuthHandler(consumer_key, consumer_secret)
+    auth.set_access_token(acces_token, access_token_secret)
+    stream=Stream(auth,l)
+    stream.filter(track=['filter_1', 'filter_2',])
