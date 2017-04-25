@@ -1,7 +1,10 @@
+#imports
 from tweepy.streaming import StreamListener
 from tweepy import OAuthHandler
 from tweepy import Stream
 import time
+
+#access
 
 acces_token = "" #insert your access_token here - given by twitter after creating app
 access_token_secret = "" #insert your access token secret here  - given by twitter after creating app
@@ -13,7 +16,7 @@ class StdOutListener(StreamListener):
     def on_data(self, data):
         try:
             print(data)
-            savefile=open("twitter.txt","a")
+            savefile=open("twitter.txt","a") #name of file
             savefile.write(data)
             savefile.write('\n')
             savefile.close()
